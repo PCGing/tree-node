@@ -1,4 +1,4 @@
-package com.pcg.test.treeNode;
+package com.pcg.treeNode;
 
 /**
  * 二叉树
@@ -8,7 +8,7 @@ public class BinaryTree {
     // 根节点
     private TreeNode root;
 
-    public BinaryTree(){}
+    private BinaryTree(){}
 
     public BinaryTree(TreeNode root) {
         this.root = root;
@@ -57,8 +57,7 @@ public class BinaryTree {
             this.left = left;
         }
 
-        public TreeNode getRight()
-        {
+        public TreeNode getRight(){
             return right;
         }
 
@@ -81,20 +80,20 @@ public class BinaryTree {
 
     public TreeNode parent(TreeNode subTree, TreeNode element)
     {
-        if (subTree == null)
+        if (subTree == null) {
             return null;
-        if (subTree.getLeft() == element || subTree.getRight() == element)
+        }
+        if (subTree.getLeft() == element || subTree.getRight() == element){
             // 返回父结点地址
             return subTree;
+        }
         TreeNode p;
         // 现在左子树中找，如果左子树中没有找到，才到右子树去找
-        if ((p = parent(subTree.getLeft(), element)) != null)
+        if ((p = parent(subTree.getLeft(), element)) != null){
             // 递归在左子树中搜索
-        {
             return p;
-        } else
+        } else{
             // 递归在右子树中搜索
-        {
             return parent(subTree.getRight(), element);
         }
     }
@@ -131,7 +130,8 @@ public class BinaryTree {
 
     private int getHeight(TreeNode node) {
         if (node == null){
-            return 0;// 递归结束：空树高度为0
+            // 递归结束：空树高度为0
+            return 0;
         }  else {
             int i = getHeight(node.getLeft());
             int j = getHeight(node.getRight());
@@ -202,6 +202,6 @@ public class BinaryTree {
         System.out.println(bt.getHeight());
         System.out.println(bt.getSize());
 
-        System.out.println(bt.getParent(r22).getData());
+        System.out.println(bt.getParent(l22).getData());
     }
 }

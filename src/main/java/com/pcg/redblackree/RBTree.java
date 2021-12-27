@@ -740,7 +740,9 @@ public class RBTree < T extends Comparable < T > > {
             {
                 System.out.printf ( "%2d(B) is root\n" , tree.key );
             } else                // tree是分支节点
+            {
                 System.out.printf ( "%2d(%s) is %2d's %6s child\n" , tree.key , isRed ( tree ) ? "R" : "B" , key , direction == 1 ? "right" : "left" );
+            }
 
             print ( tree.left , tree.key , - 1 );
             print ( tree.right , tree.key , 1 );
