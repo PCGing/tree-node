@@ -24,8 +24,9 @@ public class BinaryTree {
         //判断是否为对称二叉树 101
         //initIsSymmetric();
         //将有序数组转为高度平衡二叉搜索树 108
-        initSortedArrayToBST();
-
+        //initSortedArrayToBST();
+        //是否是高度平衡的二叉树
+        initIsBalanced();
 
     }
 
@@ -286,7 +287,7 @@ public class BinaryTree {
      * @param right 数组最右下标
      * @return
      */
-    public static TreeNode helper(Integer[] nums, int left, int right) {
+    private static TreeNode helper(Integer[] nums, int left, int right) {
         if (left > right) {
             return null;
         }
@@ -300,4 +301,75 @@ public class BinaryTree {
         root.right = helper(nums, mid + 1, right);
         return root;
     }
+
+    /**
+     * 初始化是否高度平衡二叉树数据
+     */
+    private static void initIsBalanced(){
+//        Integer[] nums = {1,2,2,3,3,null,null,4,4}; //false
+        Integer[] nums = {3,9,20,null,null,15,7};   //true
+        TreeNode root = ConstructTree.constructTree(nums);
+        TreeNode.printOrder(root);
+        System.out.println("\n是否为高度平衡二叉树：" + isBalanced(root));
+    }
+
+    /**
+     * 判断是否为高度平衡二叉树
+     * @param root 二叉树对象
+     * @return
+     */
+    private static boolean isBalanced(TreeNode root){
+        //方案一
+        //height1(root);
+        //return isBalanced;
+
+        //方案二（方案一精简结构后的结果）
+        return height2(root) >= 0;
+    }
+    //方案一
+    private static boolean isBalanced = true;
+
+    /**
+     * 方案一
+     * @param root
+     * @return
+     */
+    public static int height1(TreeNode root){
+        if(root == null) {
+            return 0;
+        }
+        if(!isBalanced){
+            //仅是结束递归，无特殊意义
+            return 0;
+        }
+        //计算最大高度
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+
+        //如果高度超过1，则非平衡二叉树
+        if (Math.abs(right - left) > 1) {
+            isBalanced = false;
+        }
+        return Math.max(left, right) + 1;
+    }
+
+    /**
+     * 方案二：方案一精简结构得出
+     * @param root
+     * @return
+     */
+    private static int height2(TreeNode root){
+        if(root == null) {
+            return 0;
+        }
+        //计算最大高度
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        //如果高度超过1，则非平衡二叉树
+        if (Math.abs(right - left) > 1 || left < 0 || right <0 ) {
+            return -1;
+        }
+        return Math.max(left, right) + 1;
+    }
+
 }
