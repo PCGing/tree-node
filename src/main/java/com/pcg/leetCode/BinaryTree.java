@@ -36,10 +36,10 @@ public class BinaryTree {
         //initMinDepth();
         //开幕式烟火 LCP44
         //initNumColor();
-        //二叉树前序遍历
-        initPreorderTraversal();
-        //二叉树后序遍历
-        initPostorderTraversal();
+        //二叉树前序遍历 144
+        //initPreorderTraversal();
+        //二叉树后序遍历 145
+        //initPostorderTraversal();
 
 
 
