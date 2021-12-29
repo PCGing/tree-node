@@ -25,8 +25,13 @@ public class BinaryTree {
         //initIsSymmetric();
         //将有序数组转为高度平衡二叉搜索树 108
         //initSortedArrayToBST();
-        //是否是高度平衡的二叉树
-        initIsBalanced();
+        //是否是高度平衡的二叉树 110
+        //initIsBalanced();
+        //二叉树最小深度 111
+        initMinDepth();
+
+
+
 
     }
 
@@ -372,4 +377,48 @@ public class BinaryTree {
         return Math.max(left, right) + 1;
     }
 
+    /**
+     * 初始化计算最小深度数据
+     */
+    private static void initMinDepth(){
+//        Integer[] nums = {3,9,20,null,null,15,7}; //最小深度为2
+        Integer[] nums = {2,null,3,null,4,null,5,null,6}; //最小深度为5
+        TreeNode root = ConstructTree.constructTree(nums);
+        System.out.println("二叉树最小深度为：" + minDepth(root));
+        TreeNode.printOrder(root);
+    }
+
+    /**
+     * 与求最大路径相反，不过要注意过滤空节点
+     * @param root
+     * @return
+     */
+    private static int minDepth(TreeNode root){
+        return depMin(root);
+    }
+
+    /**
+     * 先序遍历递归查询二叉树
+     * @param root
+     * @return
+     */
+    public static int depMin(TreeNode root){
+        if(root == null) {
+            return 0;
+        }
+
+        // null节点不参与比较
+        if (root.left == null && root.right != null) {
+            return 1 + depMin(root.right);
+        }
+        // null节点不参与比较
+        if (root.right == null && root.left != null) {
+            return 1 + depMin(root.left);
+        }
+
+        //计算最小高度
+        int left = depMin(root.left);
+        int right = depMin(root.right);
+        return Math.min(left, right) + 1;
+    }
 }
