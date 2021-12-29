@@ -4,7 +4,9 @@ import com.pcg.leetCode.Bean.TreeNode;
 import com.pcg.utils.ConstructTree;
 import com.pcg.utils.TreeOperation;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -33,7 +35,11 @@ public class BinaryTree {
         //二叉树最小深度 111
         //initMinDepth();
         //开幕式烟火 LCP44
-        initNumColor();
+        //initNumColor();
+        //二叉树前序遍历
+        initPreorderTraversal();
+        //二叉树后序遍历
+        initPostorderTraversal();
 
 
 
@@ -456,5 +462,61 @@ public class BinaryTree {
         set.add(root.val);
         dfs(root.left);
         dfs(root.right);
+    }
+
+    /**
+     * 初始化前序遍历数据
+     */
+    private static void initPreorderTraversal(){
+        Integer[] nums = {1,null,2,3};
+        TreeNode root = ConstructTree.constructTree(nums);
+        System.out.println("前序遍历结果为：" + preorderTraversal(root));
+    }
+    /**
+     * 前序遍历
+     * @param root
+     * @return
+     */
+    private static List<Integer> preorderTraversal(TreeNode root){
+        List<Integer> nums = new ArrayList<>();
+        preOrder(root,nums);
+        return nums;
+
+    }
+    private static void preOrder(TreeNode root, List<Integer> nums){
+        if(root == null) {
+            return;
+        }
+        nums.add(root.val);
+        preOrder(root.left, nums);
+        preOrder(root.right, nums);
+    }
+
+    /**
+     * 初始化后序遍历
+     */
+    private static void initPostorderTraversal(){
+        Integer[] nums = {1,null,2,3};
+        TreeNode root = ConstructTree.constructTree(nums);
+        System.out.println("后序遍历结果为：" + postorderTraversal(root));
+    }
+    /**
+     * 后序遍历
+     * @param root
+     * @return
+     */
+    private static List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> nums = new ArrayList<>();
+        postOrder(root,nums);
+        return nums;
+
+    }
+    private static void postOrder(TreeNode root, List<Integer> nums){
+        if(root == null) {
+            return;
+        }
+        postOrder(root.left, nums);
+        postOrder(root.right, nums);
+        nums.add(root.val);
     }
 }
