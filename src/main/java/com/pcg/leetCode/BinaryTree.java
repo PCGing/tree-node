@@ -4,6 +4,9 @@ import com.pcg.leetCode.Bean.TreeNode;
 import com.pcg.utils.ConstructTree;
 import com.pcg.utils.TreeOperation;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * leetCode 二叉树相关题目
  *
@@ -28,8 +31,9 @@ public class BinaryTree {
         //是否是高度平衡的二叉树 110
         //initIsBalanced();
         //二叉树最小深度 111
-        initMinDepth();
-
+        //initMinDepth();
+        //开幕式烟火 LCP44
+        initNumColor();
 
 
 
@@ -402,7 +406,7 @@ public class BinaryTree {
      * @param root
      * @return
      */
-    public static int depMin(TreeNode root){
+    private static int depMin(TreeNode root){
         if(root == null) {
             return 0;
         }
@@ -420,5 +424,37 @@ public class BinaryTree {
         int left = depMin(root.left);
         int right = depMin(root.right);
         return Math.min(left, right) + 1;
+    }
+
+    /**
+     * 初始化开幕式烟火数据
+     * 力扣挑战赛」开幕式开始了，空中绽放了一颗二叉树形的巨型焰火。
+     * 给定一棵二叉树 root 代表焰火，节点值表示巨型焰火这一位置的颜色种类。请帮小扣计算巨型焰火有多少种不同的颜色。
+     */
+    private static void initNumColor(){
+//        Integer[] nums = {3,3,3}; //颜色为1
+        Integer[] nums = {1,3,2,1,null,2}; //颜色为3 为：1、2、3
+        TreeNode root = ConstructTree.constructTree(nums);
+        System.out.println("烟火颜色为：" + numColor(root));
+        TreeNode.printOrder(root);
+
+    }
+
+    //HashSet集合的特点是重复，所以把所有节点存入HashSet，然后求长度就是颜色种类
+    //先序、中序、后序遍历均可
+    private static Set<Integer> set = new HashSet<>();
+    private static int numColor(TreeNode root) {
+        dfs(root);
+        return set.size();
+
+    }
+    private static void dfs(TreeNode root){
+        if(root == null){
+            return;
+        }
+        //先序遍历
+        set.add(root.val);
+        dfs(root.left);
+        dfs(root.right);
     }
 }
