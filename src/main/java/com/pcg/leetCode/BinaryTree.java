@@ -40,6 +40,8 @@ public class BinaryTree {
         //initPreorderTraversal();
         //二叉树后序遍历 145
         //initPostorderTraversal();
+        //路径总和
+        initHasPathSum();
 
 
 
@@ -518,5 +520,37 @@ public class BinaryTree {
         postOrder(root.left, nums);
         postOrder(root.right, nums);
         nums.add(root.val);
+    }
+
+    /**
+     * 初始化数据
+     */
+    private static void initHasPathSum(){
+        Integer[] nums = {5,4,8,11,null,13,4,7,2,null,null,null,1};
+        int targetSum = 22;
+        TreeNode root = ConstructTree.constructTree(nums);
+        System.out.println("是否有路径上所有节点值相加等于targetSum：" + hasPathSum(root, targetSum));
+        TreeNode.printOrder(root);
+
+    }
+
+    /**
+     * 给你二叉树的根节点root 和一个表示目标和的整数targetSum。
+     * 判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和targetSum。
+     * 如果存在，返回 true ；否则，返回 false
+     * @param root
+     * @param targetSum
+     * @return
+     */
+    private static boolean hasPathSum(TreeNode root, int targetSum) {
+        if(root == null) {
+            return false;
+        }
+        //由于left和right都为Object，所以只有为null时才会相等，即此时为叶子结点
+        if(root.left == root.right && root.val == targetSum){
+            return true;
+        }
+        //每到下个层级，就把上个层级的值减掉
+        return hasPathSum(root.left, (targetSum - root.val)) || hasPathSum(root.right,(targetSum - root.val));
     }
 }
