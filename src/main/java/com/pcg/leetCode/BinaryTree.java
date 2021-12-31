@@ -40,8 +40,10 @@ public class BinaryTree {
         //initPreorderTraversal();
         //二叉树后序遍历 145
         //initPostorderTraversal();
-        //路径总和
-        initHasPathSum();
+        //路径总和 112
+        //initHasPathSum();
+        //二叉搜索树的最近祖先 235
+        initLowestCommonAncestor();
 
 
 
@@ -533,7 +535,6 @@ public class BinaryTree {
         TreeNode.printOrder(root);
 
     }
-
     /**
      * 给你二叉树的根节点root 和一个表示目标和的整数targetSum。
      * 判断该树中是否存在 根节点到叶子节点 的路径，这条路径上所有节点值相加等于目标和targetSum。
@@ -552,5 +553,52 @@ public class BinaryTree {
         }
         //每到下个层级，就把上个层级的值减掉
         return hasPathSum(root.left, (targetSum - root.val)) || hasPathSum(root.right,(targetSum - root.val));
+    }
+
+    /**
+     * 初始化数据
+     * 求p节点和q节点的最近公共祖先
+     */
+    private static void initLowestCommonAncestor(){
+        Integer[] nums = {6,2,8,0,4,7,9,null,null,3,5};
+        TreeNode root = ConstructTree.constructTree(nums);
+
+        Integer[] pNums = {2};
+        TreeNode p = ConstructTree.constructTree(pNums);
+
+        Integer[] qNums = {8};
+        TreeNode q = ConstructTree.constructTree(qNums);
+
+        TreeNode parentNode = lowestCommonAncestor(root, p, q);
+        System.out.println(p.val + "和" + q.val + "的最近公共祖先为：" + parentNode.val);
+        TreeNode.printOrder(root);
+    }
+    /**
+     * 找到二叉搜索树中两个指定节点的最近公共祖先。
+     * 公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
+     * @param root 二叉搜索树（无重复值）
+     * @param p 节点p
+     * @param q 节点q
+     * @return
+     */
+    private static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null) {
+            return null;
+        }
+        //保证p在左子树，q在右子树
+        if(p.val > q.val){
+            return lowestCommonAncestor(root, q, p);
+        }
+        //如果分别在左右子树，那么当前节点就是他们的公众祖先
+        if(root.val >= p.val && root.val <= q.val){
+            return root;
+        }
+        //都在左子树
+        if(root.val > q.val){
+            return lowestCommonAncestor(root.left, p, q);
+            //都在右子树
+        }else{
+            return lowestCommonAncestor(root.right, p, q);
+        }
     }
 }
