@@ -3,6 +3,7 @@ package com.pcg.utils;
 import com.pcg.leetCode.Bean.TreeNode;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Queue;
 
 
 /**
@@ -66,6 +67,42 @@ public class ConstructTree {
             lineNodeNum = nodeQueue.size() * 2;
         }
 
+        return root;
+    }
+
+    /**
+     * 根据数组创建二叉树 （另一种思路）
+     * @param parts Integer数组（eg：Integer[] nums = {4,2,7,1,3,6,9};）
+     * @return 二叉树对象
+     */
+    public static TreeNode constructTree2(Integer[] parts){
+        if(parts.length == 0){
+            return null;
+        }
+        Integer item = parts[0];
+        TreeNode root = new TreeNode(item);
+        Queue<TreeNode> nodeQueue = new LinkedList<>();
+        nodeQueue.add(root);
+        int index = 1;
+        while(!nodeQueue.isEmpty()) {
+            TreeNode node = nodeQueue.remove();
+            if (index == parts.length) {
+                break;
+            }
+            item = parts[index++];
+            if (item != null) {
+                node.left = new TreeNode(item);
+                nodeQueue.add(node.left);
+            }
+            if (index == parts.length) {
+                break;
+            }
+            item = parts[index++];
+            if (item != null) {
+                node.right = new TreeNode(item);
+                nodeQueue.add(node.right);
+            }
+        }
         return root;
     }
 }

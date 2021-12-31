@@ -42,7 +42,9 @@ public class BinaryTree {
         //二叉搜索树的最近祖先 235
         //initLowestCommonAncestor();
         //获取二叉树所有路径 257
-        initBinaryTreePaths();
+        //initBinaryTreePaths();
+        //计算所有左叶子节点之和 404
+        initSumOfLeftLeaves();
 
 
 
@@ -644,5 +646,39 @@ public class BinaryTree {
         traverse(root.right);
         //后序遍历清空List
         path.removeLast();
+    }
+
+    /**
+     * 初始化数据
+     */
+    private static void initSumOfLeftLeaves(){
+        Integer[] parts = {5,4,8,11,null,13,4,7,2,null,null,null,1};
+        TreeNode root = ConstructTree.constructTree2(parts);
+        System.out.println("左叶子节点之和为：" + sumOfLeftLeaves(root));
+        TreeNode.printOrder(root);
+    }
+    /**
+     * 计算给定二叉树的所有左叶子之和
+     * @param root
+     * @return
+     */
+    private static int sumOfLeftLeaves(TreeNode root) {
+        //根节点不能是叶子节点
+        leftLeaves(root,1);
+        return sum;
+    }
+    //左叶子节点之和
+    private static int sum = 0;
+    //二叉树对象和是否为左子树
+    private static void leftLeaves(TreeNode root, int leftFlg){
+        if(root == null) {
+            return;
+        }
+        //判断是否为左叶子节点
+        if(root.left == null && root.right == null && leftFlg == 0){
+            sum += root.val;
+        }
+        leftLeaves(root.left, 0);
+        leftLeaves(root.right, 1);
     }
 }

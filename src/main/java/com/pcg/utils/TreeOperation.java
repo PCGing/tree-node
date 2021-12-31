@@ -95,5 +95,23 @@ public class TreeOperation {
             System.out.println(sb.toString());
         }
     }
+
+    public static void prettyPrintTree(TreeNode node, String prefix, boolean isLeft) {
+        if (node == null) {
+            System.out.println("Empty tree");
+            return;
+        }
+        if (node.right != null) {
+            prettyPrintTree(node.right, prefix + (isLeft ? "│   " : "    "), false);
+        }
+        System.out.println(prefix + (isLeft ? "└── " : "┌── ") + node.val);
+        if (node.left != null) {
+            prettyPrintTree(node.left, prefix + (isLeft ? "    " : "│   "), true);
+        }
+    }
+
+    public static void prettyPrintTree(TreeNode node) {
+        prettyPrintTree(node,  "", true);
+    }
 }
 
