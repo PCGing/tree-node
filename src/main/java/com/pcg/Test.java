@@ -3,6 +3,8 @@ package com.pcg;
 import com.pcg.leetCode.Bean.TreeNode;
 import com.pcg.utils.ConstructTree;
 
+import java.util.LinkedList;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -11,9 +13,14 @@ import com.pcg.utils.ConstructTree;
  */
 public class Test {
     public static void main(String[] args) {
-//        Integer[] nums = {-10,-3,0,5,9};
-        Integer[] nums = {5, 4, 7, 3, null, 2, null, -1, null, 9};
-        TreeNode root = ConstructTree.constructTree(nums);
-        TreeNode.printOrder(root);
+
+        LinkedList<String> list = new LinkedList<>();
+        list.addLast("1");
+        list.addLast("2");
+        list.addLast("3");
+        list.removeLast();
+        String join = String.join("->", list);
+        System.out.println(list);
+        System.out.println(join);
     }
 }

@@ -4,10 +4,7 @@ import com.pcg.leetCode.Bean.TreeNode;
 import com.pcg.utils.ConstructTree;
 import com.pcg.utils.TreeOperation;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * leetCode 二叉树相关题目
@@ -43,7 +40,9 @@ public class BinaryTree {
         //路径总和 112
         //initHasPathSum();
         //二叉搜索树的最近祖先 235
-        initLowestCommonAncestor();
+        //initLowestCommonAncestor();
+        //获取二叉树所有路径 257
+        initBinaryTreePaths();
 
 
 
@@ -600,5 +599,50 @@ public class BinaryTree {
         }else{
             return lowestCommonAncestor(root.right, p, q);
         }
+    }
+
+    /**
+     * 初始化数据
+     */
+    private static void initBinaryTreePaths(){
+        Integer[] nums = {5,4,8,11,null,13,4,7,2,null,null,null,1};
+        TreeNode root = ConstructTree.constructTree(nums);
+        List<String> paths = binaryTreePaths(root);
+        System.out.println("从跟节点到叶子节点到路径列表为：" + paths);
+        TreeNode.printOrder(root);
+    }
+
+    /**
+     * 按 任意顺序 ，返回所有从根节点到叶子节点的路径
+     * @param root 二叉树对象
+     * @return 所有路径集合
+     */
+    private static List<String> binaryTreePaths(TreeNode root){
+        traverse(root);
+        return res;
+    }
+    //存放路径
+    private static LinkedList<String> path = new LinkedList<>();
+    //存放最终输出
+    private static LinkedList<String> res = new LinkedList<>();
+    private static void traverse(TreeNode root){
+        if(root == null){
+            return;
+        }
+        //如果左右子树都为null，则证明是叶子结点
+        //所以进行拼接节点+转换为路径的形式
+        if(root.left == null && root.right == null){
+            path.addLast(root.val + "");
+            res.addLast(String.join("->", path));
+            path.removeLast();
+            return;
+        }
+
+        //前序遍历存放值
+        path.addLast(root.val + "");
+        traverse(root.left);
+        traverse(root.right);
+        //后序遍历清空List
+        path.removeLast();
     }
 }
