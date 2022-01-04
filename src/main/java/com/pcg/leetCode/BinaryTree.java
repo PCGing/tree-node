@@ -44,7 +44,9 @@ public class BinaryTree {
         //获取二叉树所有路径 257
         //initBinaryTreePaths();
         //计算所有左叶子节点之和 404
-        initSumOfLeftLeaves();
+        //initSumOfLeftLeaves();
+        //计算二叉搜索树不同节点之间最小差值 530
+        initGetMinimumDifference();
 
 
 
@@ -681,4 +683,43 @@ public class BinaryTree {
         leftLeaves(root.left, 0);
         leftLeaves(root.right, 1);
     }
+
+    /**
+     * 初始化数据
+     */
+    private static void initGetMinimumDifference(){
+        Integer[] parts = {1,0,48,null,null,12,49};
+        TreeNode root = ConstructTree.constructTree2(parts);
+        int min = getMinimumDifference(root);
+        System.out.println("该二叉搜索树中，节点之间最小差值为：" + min);
+        TreeNode.printOrder(root);
+    }
+
+    /**
+     * 计算二叉搜索树节点之间最小差值
+     * @param root
+     * @return
+     */
+    private static int getMinimumDifference(TreeNode root) {
+        traversal(root);
+        return res1;
+    }
+    //当前最小差值，默认为最大int值
+    private static int res1 = Integer.MAX_VALUE;
+    //上一个节点
+    private static TreeNode prev = null;
+    private static void traversal(TreeNode root){
+        if(root == null) {
+            return;
+        }
+        traversal(root.left);
+        //中序遍历
+        if(prev != null){
+            res1 = Math.min(res1, root.val - prev.val);
+        }
+        prev = root;
+        traversal(root.right);
+
+    }
+
 }
