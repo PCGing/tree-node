@@ -46,7 +46,9 @@ public class BinaryTree {
         //计算所有左叶子节点之和 404
         //initSumOfLeftLeaves();
         //计算二叉搜索树不同节点之间最小差值 530
-        initGetMinimumDifference();
+        //initGetMinimumDifference();
+        //二叉树的直径（可以不过根节点） 543
+        initDiameterOfBinaryTree();
 
 
 
@@ -719,6 +721,53 @@ public class BinaryTree {
         }
         prev = root;
         traversal(root.right);
+    }
+
+    /**
+     * 初始化数据
+     */
+    private static void initDiameterOfBinaryTree(){
+        //本二叉树左右子树深度之和小与右子树某节点左右子树之和
+        Integer[] parts = {4,-7,-3,null,null,-9,-3,9,-7,-4,null,6,null,-6,-6,null,null,0,6,5,null,9,null,null,-1,-4,null,null,null,-2};
+        //正常二叉树
+        //Integer[] parts = {1,2,3,4,5};
+
+        TreeNode root = ConstructTree.constructTree2(parts);
+        System.out.println("该二叉树最大直径为：" + diameterOfBinaryTree(root));
+        TreeNode.printOrder(root);
+
+
+    }
+
+    //最大深度，初始化为0
+    private static int maxDiameter = 0;
+
+    /**
+     * 计算二叉树任意两个结点路径长度中的最大值（可以不过跟节点）
+     * @param root
+     * @return
+     */
+    private static int diameterOfBinaryTree(TreeNode root){
+        maxDepth1(root);
+        return maxDiameter;
+    }
+
+    /**
+     *在后序遍历中获取各节点左右子树深度之和的最大值
+     * @param root
+     * @return
+     */
+    private static int maxDepth1(TreeNode root){
+        if(root == null){return 0;}
+
+        int leftMax = maxDepth1(root.left);
+        int rightMax = maxDepth1(root.right);
+
+        //取左右子树最大深度和各子树深度之和最大值（因为可能不过根节点，各子树必须是某节点的左右子树）
+        maxDiameter = Math.max(maxDiameter, leftMax + rightMax);
+
+        //正常后序遍历求最大深度
+        return 1 + Math.max(leftMax, rightMax);
 
     }
 
