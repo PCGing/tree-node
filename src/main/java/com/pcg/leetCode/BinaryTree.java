@@ -50,7 +50,9 @@ public class BinaryTree {
         //二叉树的直径（可以不过根节点） 543
         //initDiameterOfBinaryTree();
         //二叉搜索树的众数 501
-        initFindMode();
+        //initFindMode();
+        //二叉树的坡度 563
+        initFindTilt();
 
 
 
@@ -843,6 +845,64 @@ public class BinaryTree {
         prev1 = root;
         traversal1(root.right);
 
+    }
+
+    /**
+     * 初始化数据
+     */
+    private static void initFindTilt(){
+
+        Integer[] parts = {4,2,9,3,5,null,7};
+        TreeNode root = ConstructTree.constructTree2(parts);
+        int tilt = findTilt(root);
+        System.out.println("整个树的坡度就是其所有节点的坡度之和，值为：" + tilt);
+        TreeNode.printOrder(root, 1);
+        System.out.println("\n计算各个坡度之后的二叉树");
+
+        /**
+         * 节点 3 的坡度：|0-0| = 0（没有子节点）
+         * 节点 5 的坡度：|0-0| = 0（没有子节点）
+         * 节点 7 的坡度：|0-0| = 0（没有子节点）
+         * 节点 2 的坡度：|3-5| = 2（左子树就是左子节点，所以和是 3 ；右子树就是右子节点，所以和是 5 ）
+         * 节点 9 的坡度：|0-7| = 7（没有左子树，所以和是 0 ；右子树正好是右子节点，所以和是 7 ）
+         * 节点 4 的坡度：|(3+5+2)-(9+7)| = |10-16| = 6（左子树值为 3、5 和 2 ，和是 10 ；右子树值为 9 和 7 ，和是 16 ）
+         * 坡度总和：0 + 0 + 0 + 2 + 7 + 6 = 15
+         */
+        Integer[] tilts = {6,2,7,0,0,null,0};
+        TreeNode tiltsNode = ConstructTree.constructTree2(tilts);
+        TreeNode.printOrder(tiltsNode,1);
+    }
+
+    //坡度之和
+    private static int res2 = 0;
+
+    /**
+     * 求该二叉树的坡度（即各子树坡度之和，后序遍历简单应用）
+     * @param root
+     * @return
+     */
+    private static int findTilt(TreeNode root){
+        sum(root);
+        return res2;
+    }
+
+    /**
+     * 求以该节点为根节点树的结点之和
+     * @param root
+     * @return
+     */
+    private static int sum(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+
+        int leftSum = sum(root.left);
+        int rightSum = sum(root.right);
+
+        //后序遍历位置
+        //求每个左右子树差的绝对值，并相加
+        res2 += Math.abs(leftSum - rightSum);
+        return leftSum + rightSum + root.val;
     }
 
 }
