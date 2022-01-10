@@ -52,7 +52,9 @@ public class BinaryTree {
         //二叉搜索树的众数 501
         //initFindMode();
         //二叉树的坡度 563
-        initFindTilt();
+        //initFindTilt();
+        //另一颗树的子树
+        initIsSubtree();
 
 
 
@@ -903,6 +905,43 @@ public class BinaryTree {
         //求每个左右子树差的绝对值，并相加
         res2 += Math.abs(leftSum - rightSum);
         return leftSum + rightSum + root.val;
+    }
+
+    /**
+     * 初始化数据
+     */
+    private static void initIsSubtree(){
+        Integer[] parts1 = {3,4,5,1,2};
+        TreeNode root = ConstructTree.constructTree2(parts1);
+        Integer[] parts2 = {4,1,2};
+        TreeNode subRoot = ConstructTree.constructTree2(parts2);
+        boolean subtree = isSubtree(root, subRoot);
+        System.out.println("subRoot 是否为 root 的子树：" + subtree);
+        System.out.println("root树");
+        TreeNode.printOrder(root,1);
+        System.out.println("subRoot树");
+        TreeNode.printOrder(subRoot,1);
+
+    }
+
+    /**
+     * 判断subRoot是否与root子树完全相同
+     * @param root
+     * @param subRoot
+     * @return
+     */
+    private static boolean isSubtree(TreeNode root, TreeNode subRoot){
+        if(root == null){
+            return subRoot == null;
+        }
+
+        //判断两二叉树是否完全相同
+        if(isSameTree(root, subRoot)){
+            return true;
+        }
+
+        //递归判断左右子树是否与被包含二叉树相同
+        return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
     }
 
 }
