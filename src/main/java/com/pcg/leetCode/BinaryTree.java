@@ -48,7 +48,9 @@ public class BinaryTree {
         //计算二叉搜索树不同节点之间最小差值 530
         //initGetMinimumDifference();
         //二叉树的直径（可以不过根节点） 543
-        initDiameterOfBinaryTree();
+        //initDiameterOfBinaryTree();
+        //二叉搜索树的众数 501
+        initFindMode();
 
 
 
@@ -768,6 +770,78 @@ public class BinaryTree {
 
         //正常后序遍历求最大深度
         return 1 + Math.max(leftMax, rightMax);
+
+    }
+
+    /**
+     * 初始化数据
+     */
+    private static void initFindMode(){
+        Integer[] parts = {6,1,7,1,2,7,9};
+        TreeNode root = ConstructTree.constructTree2(parts);
+        List<Integer> mode = findMode(root);
+        System.out.println("该二叉搜索树最大众数为：" + mode);
+        TreeNode.printOrder(root);
+
+    }
+
+    //众数集合
+    private static List<Integer> mode = new ArrayList<>();
+    //上一个节点
+    private static TreeNode prev1 = null;
+    // 当前元素的重复次数
+    private static int curCount = 0;
+    // 全局的最长相同序列长度
+    private static int maxCount = 0;
+
+    /**
+     * 输出众数列表（出现频率最高的元素）
+     * @param root 二叉搜索树
+     * @return 众数列表
+     */
+    private static List<Integer> findMode(TreeNode root){
+        traversal1(root);
+        return mode;
+    }
+
+    private static void traversal1(TreeNode root){
+        if(root == null){
+            return;
+        }
+
+        traversal1(root.left);
+
+        //中序遍历位置
+        //如果上个节点为null，则初始化数据
+        if(prev1 == null){
+            curCount = 1;
+            maxCount = 1;
+            mode.add(root.val);
+        }else{
+            //如果当前节点与上个节点值相等
+            if(root.val == prev1.val){
+                //则该节点值出现次数加一
+                curCount++;
+                //如果该节点值出现次数等于最大出现次数，则该节点值就是众数之一
+                if(curCount == maxCount){
+                    mode.add(root.val);
+                //如果当前节值出现次数大于最大出现次数，则该节点值就是众数（且唯一）
+                }else if(curCount > maxCount){
+                    mode.clear();
+                    maxCount = curCount;
+                    mode.add(root.val);
+                }
+            //如果当前节点与上个节点值不相等，则是新的节点值，所以重新计数
+            }else{
+                curCount = 1;
+                if(curCount == maxCount){
+                    mode.add(root.val);
+                }
+            }
+        }
+        //计算完毕，把当前节点赋值给上个节点
+        prev1 = root;
+        traversal1(root.right);
 
     }
 
