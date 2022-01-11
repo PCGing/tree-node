@@ -53,7 +53,7 @@ public class BinaryTree {
         //initFindMode();
         //二叉树的坡度 563
         //initFindTilt();
-        //另一颗树的子树
+        //另一颗树的子树 572
         //initIsSubtree();
         //根据二叉树创建字符串 606
         initTree2str();
@@ -962,6 +962,8 @@ public class BinaryTree {
      * 举例来说，二叉树[root,left,right]，则转换为root(left)(right)。
      * 如果只有left为空节点，则输出root()(right)；
      * 如果只有right为空节点则可以忽略右节点的()，输出为root(left)。
+     *
+     * 使用StringBuilder至少能提高三倍的执行速度，以下仅提供思路
      * @param root
      * @return
      */
