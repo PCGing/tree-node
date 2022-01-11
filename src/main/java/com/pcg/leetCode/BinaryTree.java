@@ -56,7 +56,9 @@ public class BinaryTree {
         //另一颗树的子树 572
         //initIsSubtree();
         //根据二叉树创建字符串 606
-        initTree2str();
+        //initTree2str();
+        //合并二叉树 617
+        initMergeTrees();
 
 
 
@@ -991,5 +993,65 @@ public class BinaryTree {
         //仅增加返回，逻辑上不会走到该位置
         return "";
     }
+
+    /**
+     * 初始化数据
+     */
+    private static void initMergeTrees(){
+
+        Integer[] tree1 = {1,3,2,5};
+        TreeNode root1 = ConstructTree.constructTree2(tree1);
+        System.out.println("=========tree1============");
+        TreeNode.printOrder(root1,1);
+
+        Integer[] tree2 = {2,1,3,null,4,null,7};
+        TreeNode root2 = ConstructTree.constructTree2(tree2);
+        System.out.println("============tree2==========");
+        TreeNode.printOrder(root2,1);
+
+        TreeNode root = mergeTrees(root1, root2);
+        System.out.println("==========合并后的树==========");
+        TreeNode.printOrder(root,1);
+    }
+
+    /**
+     * 二叉树合并（节点相加）例：
+     * 输入:
+     * 	Tree 1                     Tree 2
+     *           1                         2
+     *          / \                       / \
+     *         3   2                     1   3
+     *        /                           \   \
+     *       5                             4   7
+     * 输出:
+     * 合并后的树:
+     * 	     3
+     * 	    / \
+     * 	   4   5
+     * 	  / \   \
+     * 	 5   4   7
+     *
+     * @param root1  Tree 1
+     * @param root2  Tree 2
+     * @return 合并后的树
+     */
+    private static TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
+
+        //如果有一节点为null，则直接覆盖
+        if(root1 == null){
+            return root2;
+        }
+        if(root2 == null){
+            return root1;
+        }
+        //跟节点值直接相加
+        root1.val += root2.val;
+        //递归计算左右子树
+        root1.left = mergeTrees(root1.left, root2.left);
+        root1.right = mergeTrees(root1.right, root2.right);
+        return root1;
+
+    }
+
 
 }
