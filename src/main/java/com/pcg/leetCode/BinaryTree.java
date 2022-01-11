@@ -54,7 +54,9 @@ public class BinaryTree {
         //二叉树的坡度 563
         //initFindTilt();
         //另一颗树的子树
-        initIsSubtree();
+        //initIsSubtree();
+        //根据二叉树创建字符串 606
+        initTree2str();
 
 
 
@@ -942,6 +944,50 @@ public class BinaryTree {
 
         //递归判断左右子树是否与被包含二叉树相同
         return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+    }
+
+    /**
+     * 初始化数据
+     */
+    private static void initTree2str(){
+        Integer[] parts = {1,2,3,null,4};
+        TreeNode root = ConstructTree.constructTree2(parts);
+        String tree2str = tree2str(root);
+        System.out.println("转换为字符串为：" + tree2str);
+        TreeNode.printOrder(root);
+    }
+
+    /**
+     * 简单来说就是：子节点需要用()来包裹。
+     * 举例来说，二叉树[root,left,right]，则转换为root(left)(right)。
+     * 如果只有left为空节点，则输出root()(right)；
+     * 如果只有right为空节点则可以忽略右节点的()，输出为root(left)。
+     * @param root
+     * @return
+     */
+    private static String tree2str(TreeNode root){
+        if(root == null) {
+            return "";
+        }
+        //如果左右子树都为空，则直接返回值，无需拼接括号
+        if(root.left == null && root.right == null){
+            return root.val + "";
+        }
+
+        String leftStr = tree2str(root.left);
+        String rightStr = tree2str(root.right);
+
+        //如果左子树或者右子树不为空，则肯定拼上左子树
+        if(root.left != null || root.right != null){
+            String str = root.val + "(" + leftStr + ")";
+            //如果右子树不为空，则拼上右子树
+            if(root.right != null){
+                str += "(" + rightStr + ")";
+            }
+            return str;
+        }
+        //仅增加返回，逻辑上不会走到该位置
+        return "";
     }
 
 }
