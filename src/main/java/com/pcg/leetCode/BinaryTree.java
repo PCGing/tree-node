@@ -58,7 +58,9 @@ public class BinaryTree {
         //根据二叉树创建字符串 606
         //initTree2str();
         //合并二叉树 617
-        initMergeTrees();
+        //initMergeTrees();
+        //二叉树的层序遍历 102
+        initLevelOrder();
 
 
 
@@ -1084,6 +1086,56 @@ public class BinaryTree {
         root1.right = mergeTrees(root1.right, root2.right);
         return root1;
 
+    }
+
+    /**
+     * 初始化数据
+     *        1
+     *      /   \
+     *    2      3
+     *  /   \     \
+     * 4     5     6
+     *     /      / \
+     *    7      8   9
+     */
+    private static void initLevelOrder(){
+        Integer[] parts = {1,2,3,4,5,null,6,null,null,7,null,8,9};
+        TreeNode root = ConstructTree.constructTree2(parts);
+        List<List<Integer>> res = levelOrder(root);
+        System.out.print("层序遍历为：");
+        System.out.println(res);
+        TreeNode.printOrder(root, 1);
+    }
+
+    /**
+     * bfs的简单应用
+     * 增加for循环用来处理当前层的n个节点
+     * @param root
+     * @return
+     */
+    private static List<List<Integer>> levelOrder(TreeNode root){
+        List<List<Integer>> res = new ArrayList<>();
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        if(root != null){
+            queue.add(root);
+        }
+
+        while (!queue.isEmpty()){
+            int n = queue.size();
+            List<Integer> level = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                TreeNode node = queue.poll();  //出栈
+                level.add(node.val);
+                if(node.left != null){
+                    queue.add(node.left);   //入栈
+                }
+                if (node.right != null){
+                    queue.add(node.right);  //入栈
+                }
+            }
+            res.add(level);
+        }
+        return res;
     }
 
 
