@@ -65,6 +65,39 @@ public class BinaryTree {
     }
 
     /**
+     * dfs：深度优先搜索
+     * @param root
+     */
+    private static void dfs(TreeNode root){
+        if(root == null){
+            return;
+        }
+        dfs(root.left);
+        dfs(root.right);
+    }
+
+    /**
+     * bfs：广度优先搜索
+     * @param root
+     */
+    private static void bfs(TreeNode root){
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        if (root != null){
+            queue.add(root);
+        }
+        while (!queue.isEmpty()){
+            TreeNode node = queue.poll();   //出栈
+            if(node.left != null){
+                queue.add(node.left);   //入栈
+            }
+            if(node.right != null){
+                queue.add(node.right);  //入栈
+            }
+        }
+
+    }
+
+    /**
      * 初始化翻转二叉树参数
      */
     private static void initInvertTree(){
@@ -469,18 +502,18 @@ public class BinaryTree {
     //先序、中序、后序遍历均可
     private static Set<Integer> set = new HashSet<>();
     private static int numColor(TreeNode root) {
-        dfs(root);
+        preOrder(root);
         return set.size();
 
     }
-    private static void dfs(TreeNode root){
+    private static void preOrder(TreeNode root){
         if(root == null){
             return;
         }
         //先序遍历
         set.add(root.val);
-        dfs(root.left);
-        dfs(root.right);
+        preOrder(root.left);
+        preOrder(root.right);
     }
 
     /**
