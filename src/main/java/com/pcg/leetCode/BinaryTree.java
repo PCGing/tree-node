@@ -60,8 +60,9 @@ public class BinaryTree {
         //合并二叉树 617
         //initMergeTrees();
         //二叉树的层序遍历 102
-        initLevelOrder();
-
+        //initLevelOrder();
+        //二叉树层平均值 637
+        initAverageOfLevels();
 
 
     }
@@ -1124,16 +1125,61 @@ public class BinaryTree {
             int n = queue.size();
             List<Integer> level = new ArrayList<>();
             for (int i = 0; i < n; i++) {
-                TreeNode node = queue.poll();  //出栈
+                //出栈
+                TreeNode node = queue.poll();
                 level.add(node.val);
                 if(node.left != null){
-                    queue.add(node.left);   //入栈
+                    //入栈
+                    queue.add(node.left);
                 }
                 if (node.right != null){
-                    queue.add(node.right);  //入栈
+                    //入栈
+                    queue.add(node.right);
                 }
             }
             res.add(level);
+        }
+        return res;
+    }
+
+    /**
+     * 初始化数据
+     */
+    private static void initAverageOfLevels(){
+        Integer[] parts = {3,9,20,null,null,15,7};
+        TreeNode root = ConstructTree.constructTree2(parts);
+        List<Double> list = averageOfLevels(root);
+        System.out.println(list);
+    }
+    /**
+     * bfs的简单应用
+     * for循环用来处理当前层的n个节点
+     * @param root
+     * @return
+     */
+    private static List<Double> averageOfLevels(TreeNode root){
+        List<Double> res = new ArrayList<>();
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        if(root != null){
+            queue.add(root);
+        }
+
+        while (!queue.isEmpty()){
+            int n = queue.size();
+            Double sumLevel = 0D;
+            for (int i = 0; i < n; i++) {
+                TreeNode node = queue.poll();
+                //每层相加
+                sumLevel += node.val;
+                if(node.left != null){
+                    queue.add(node.left);
+                }
+                if(node.right != null){
+                    queue.add(node.right);
+                }
+            }
+            //求平均值
+            res.add(sumLevel/n);
         }
         return res;
     }
